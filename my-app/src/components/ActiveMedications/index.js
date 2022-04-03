@@ -91,8 +91,9 @@ class MedicationPage extends Component {
 
   gettingDetails = async () => {
     this.setState({apiStatus:apiStatusConstants.loading})
-    const apiUrl = 'http://localhost:3002/'
+    const apiUrl = 'https://niroggyanbackend.herokuapp.com/'
     const response = await fetch(apiUrl)
+    console.log(response)
     if (response.ok === true) {
       const data = await response.json()
       this.setState({medicationData: data,apiStatus:apiStatusConstants.success})
@@ -104,16 +105,16 @@ class MedicationPage extends Component {
 
   generatingPdf =  () =>{
     
-    var pdf = new jspdf("p", "mm", [1400,900]);
+    var pdf = new jspdf("l", "mm", [1340,1300]);
 
     const pdfCode = document.querySelector("#smartRxReport")
 
     const pdfSaved =  pdf.html(pdfCode, {
       callback: async function(doc) {
         
-        pdf.save("sample.pdf",pdfCode)        
+        pdf.save("sample.pdf",pdfCode)
 
-        const apiUrl = 'http://localhost:3002/'
+        const apiUrl = 'https://niroggyanbackend.herokuapp.com/'
 
         const html = pdfCode.outerHTML
 

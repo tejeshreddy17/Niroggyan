@@ -5,7 +5,7 @@ const path = require("path")
 
 const app = express();
 
-app.use(express.static(path.join(__dirname+"public")))
+app.use(express.static(path.join(__dirname+"/public")))
 
 const port = process.env.PORT || 3002;
 
@@ -137,6 +137,7 @@ app.get("/", async (request, response) => {
     }
 
      catch (error) {
+       response.status(400)
       console.log(`error at api-1 ${error.message}`);
     }
   });  
