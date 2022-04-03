@@ -93,7 +93,6 @@ class MedicationPage extends Component {
     this.setState({apiStatus:apiStatusConstants.loading})
     const apiUrl = 'http://localhost:3002/'
     const response = await fetch(apiUrl)
-    console.log(response)
     if (response.ok === true) {
       const data = await response.json()
       this.setState({medicationData: data,apiStatus:apiStatusConstants.success})
@@ -103,29 +102,33 @@ class MedicationPage extends Component {
     }
   }
 
-  generatingPdf = async () =>{
-    console.log("working")
-    var pdf = new jspdf("p", "mm", "a4");
+  generatingPdf =  () =>{
+    
+    var pdf = new jspdf("p", "mm", [1400,900]);
 
     const pdfCode = document.querySelector("#smartRxReport")
 
-    const pdfSaved = await  pdf.html(pdfCode, {
+    const pdfSaved =  pdf.html(pdfCode, {
       callback: async function(doc) {
         
-        pdf.save(pdfCode)
-
-        const formData = new FormData()
-
-        const pdfform = formData.append("pdf",pdf.output(pdfCode))
+        pdf.save("sample.pdf",pdfCode)        
 
         const apiUrl = 'http://localhost:3002/'
 
+        const html = pdfCode.outerHTML
+
         const options = {
+          
           method:"POST",
-          body:pdf.pdfform
+
+          body: html
+         
+          
         }
 
         const response = await fetch(apiUrl,options)
+
+        console.log(response)
 
     
         
@@ -133,9 +136,6 @@ class MedicationPage extends Component {
       
     });
 
-    const blob = pdf.output("blob")
-
-    console.log (pdfSaved)
 
         
     

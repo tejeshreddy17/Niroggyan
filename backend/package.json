@@ -4,5 +4,6 @@
     "nodemon": "^2.0.15",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2"
-  }
+  },
+  "scripts": {"start": "node index.js"}
 }

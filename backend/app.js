@@ -1,6 +1,13 @@
 const express = require("express")
+
+const path = require("path")
+
+
 const app = express();
-const port = 3002;
+
+app.use(express.static(path.join(__dirname+"public")))
+
+const port = process.env.PORT || 3002;
 
 const sampleMedicationData = {
     patient_name: 'Joyneel Acharya',
@@ -136,8 +143,9 @@ app.get("/", async (request, response) => {
 
 app.post("/",async(request,response)=>{
   try{
-    response.send(JSON.stringify(request))
-
+    response.send("Successfull")
+    response.status(200)
+    
   }catch(error){
     console.log("error at posting PDF")
   }
